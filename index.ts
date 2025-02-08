@@ -65,6 +65,11 @@ const publicFolder = path.join(__dirname, 'public');
   const promises: Array<Promise<SpeedTestServer[]>> = KEYWORDS.map(querySpeedtestApi);
 
   const data = dedupeSpeedTestServersByUrl((await Promise.all(promises)).flat());
+
+  if (data.length === 0) {
+    throw new Error('No servers found');
+  }
+
   data.sort((a, b) => a.country.localeCompare(b.country) || a.name.localeCompare(b.name) || a.host.localeCompare(b.host));
 
   const writeStream = fs.createWriteStream(path.join(publicFolder, 'servers.json'));

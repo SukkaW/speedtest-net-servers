@@ -16,8 +16,7 @@
     "foxts": "^1.1.7",
     "picocolors": "^1.1.1",
     "top-user-agents": "^2.1.33",
-    "undici": "^7.3.0",
-    "undici-cache-store-better-sqlite3": "^0.1.1"
+    "undici": "^7.3.0"
   },
   "devDependencies": {
     "@eslint-sukka/node": "^6.13.3",
