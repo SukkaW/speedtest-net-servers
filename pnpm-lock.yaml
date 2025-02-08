@@ -11,6 +11,12 @@ importers:
       '@henrygd/queue':
         specifier: ^1.0.7
         version: 1.0.7
+      better-sqlite3:
+        specifier: ^11.8.1
+        version: 11.8.1
+      foxts:
+        specifier: ^1.1.7
+        version: 1.1.7
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -718,6 +724,9 @@ packages:
 
   flatted@3.3.2:
     resolution: {integrity: sha512-AiwGJM8YcNOaobumgtng+6NHuOqC3A7MixFeDafM3X9cIUM+xUXoS5Vfgf+OihAYe20fxqNM9yPBXJzRtZ/4eA==}
+
+  foxts@1.1.7:
+    resolution: {integrity: sha512-Pw7S1yI20GY8gfj6RXt9usRE5TdQ/lgAqpy2EaWKUVNARC+jW0hxx/MQH8xkNlT3NSpt0X1P99CJTEvh3kVdUQ==}
 
   fs-constants@1.0.0:
     resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
@@ -1886,6 +1895,8 @@ snapshots:
       keyv: 4.5.4
 
   flatted@3.3.2: {}
+
+  foxts@1.1.7: {}
 
   fs-constants@1.0.0: {}
 
