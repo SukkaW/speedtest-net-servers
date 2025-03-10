@@ -70,7 +70,15 @@ const publicFolder = path.join(__dirname, 'public');
     throw new Error('No servers found');
   }
 
-  data.sort((a, b) => a.country.localeCompare(b.country) || a.name.localeCompare(b.name) || a.host.localeCompare(b.host));
+  data.sort((a, b) => (
+    a.country.localeCompare(b.country)
+    || a.name.localeCompare(b.name)
+    || a.host.localeCompare(b.host)
+    || a.sponsor.localeCompare(b.sponsor)
+    || a.url.localeCompare(b.url)
+    || a.id.localeCompare(b.id)
+    || a.https_functional - b.https_functional
+  ));
 
   const writeStream = fs.createWriteStream(path.join(publicFolder, 'servers.json'));
   let p = asyncWriteToStream(writeStream, '[\n');
@@ -114,7 +122,12 @@ const publicFolder = path.join(__dirname, 'public');
               : {})
           },
           signal: AbortSignal.timeout(1000 * 60)
-        }).then(res => res.json() as Promise<SpeedTestServer[]>)
+        }).then(res => res.json() as Promise<SpeedTestServer[]>).then(data => {
+          for (let i = 0, len = data.length; i < len; i++) {
+            data[i].distance = 0;
+          }
+          return data;
+        })
       );
     } catch (e) {
       console.error(e);
