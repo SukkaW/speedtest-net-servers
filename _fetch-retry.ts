@@ -138,7 +138,7 @@ export async function $$fetch(url: string, init?: RequestInit) {
       throw new ResponseError(res, url);
     }
 
-    if (!(res.status >= 200 && res.status <= 299) && res.status !== 304) {
+    if ((res.status < 200 || res.status > 299) && res.status !== 304) {
       throw new ResponseError(res, url);
     }
 
