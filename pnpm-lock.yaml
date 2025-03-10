@@ -20,9 +20,6 @@ importers:
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
-      top-user-agents:
-        specifier: ^2.1.39
-        version: 2.1.39
       undici:
         specifier: ^7.4.0
         version: 7.4.0
@@ -1138,9 +1135,6 @@ packages:
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
-
-  top-user-agents@2.1.39:
-    resolution: {integrity: sha512-sOJTa/5HtpiGlzIgJz0DY523IgyDF+q+AkUskQFrtZ1rrKBJUZOsDjMPHAiQMvGs3Ef75pI9yUTfKXMr6u65qQ==}
 
   ts-api-utils@2.0.1:
     resolution: {integrity: sha512-dnlgjFSVetynI8nzgJ+qF62efpglpWRk8isUEWZGWlJYySCTD6aKvbUDu+zbPeDakk3bg5H4XpitHukgfL1m9w==}
@@ -2346,8 +2340,6 @@ snapshots:
   to-regex-range@5.0.1:
     dependencies:
       is-number: 7.0.0
-
-  top-user-agents@2.1.39: {}
 
   ts-api-utils@2.0.1(typescript@5.8.2):
     dependencies:

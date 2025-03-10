@@ -60,7 +60,7 @@ const publicFolder = path.join(__dirname, 'public');
 (async () => {
   fs.mkdirSync(publicFolder, { recursive: true });
 
-  const topUserAgents = (await (await $$fetch('https://raw.githubusercontent.com/microlinkhq/top-user-agents/master/src/desktop.json')).json()) as string[];
+  const topUserAgents = (await (await $$fetch('https://cdn.jsdelivr.net/npm/top-user-agents@2.1.39/src/desktop.json')).json()) as string[];
 
   const promises: Array<Promise<SpeedTestServer[]>> = KEYWORDS.map(querySpeedtestApi);
 

@@ -15,7 +15,6 @@
     "better-sqlite3": "^11.8.1",
     "foxts": "^1.5.1",
     "picocolors": "^1.1.1",
-    "top-user-agents": "^2.1.39",
     "undici": "^7.4.0"
   },
   "devDependencies": {
