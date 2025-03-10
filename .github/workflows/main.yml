@@ -38,10 +38,25 @@ jobs:
       - run: pnpm run node index.ts
       - uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: public
+          external_repository: SukkaLab/speedtest-net-servers-dist
+          publish_branch: master
+          personal_token: ${{ secrets.GIT_DEPLOY_TOKEN }}
+          user_name: ${{ secrets.GIT_DEPLOY_USER }}
+          user_email: ${{ secrets.GIT_DEPLOY_EMAIL }}
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy public --project-name=speedtest-net-servers --commit-dirty=true --branch=main
+      - run: |
+          mkdir -p /tmp/public/
+          echo "Last updated at $(date -u)" > /tmp/public/last-run.txt
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: /tmp/public
+          keep_files: true
+          force_orphan: true
+          publish_branch: dist
