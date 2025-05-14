@@ -4,7 +4,7 @@
 
 ## Usage
 
-- [`serevrs.json`](https://chnroutes2.cdn.skk.moe/chnroutes.txt): the JSON file containing the information of known and public test servers.
+- [`serevrs.json`](https://speedtest-net-servers.cdn.skk.moe/servers.json): the JSON file containing the information of known and public test servers.
 
 ## License
 
