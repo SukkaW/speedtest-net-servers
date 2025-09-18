@@ -12,24 +12,28 @@
   "license": "MIT",
   "dependencies": {
     "@henrygd/queue": "^1.0.7",
-    "foxts": "^1.7.0",
+    "foxts": "^3.13.0",
     "picocolors": "^1.1.1",
-    "undici": "^7.15.0"
+    "undici": "^7.16.0"
   },
   "devDependencies": {
-    "@eslint-sukka/node": "^6.23.1",
+    "@eslint-sukka/node": "^7.1.1",
     "@swc-node/register": "^1.11.1",
     "@swc/core": "^1.13.5",
-    "@types/node": "^22.18.0",
-    "eslint": "^9.34.0",
-    "eslint-config-sukka": "^6.23.1",
-    "eslint-formatter-sukka": "^6.23.1",
+    "@types/node": "^24.5.2",
+    "eslint": "^9.35.0",
+    "eslint-config-sukka": "^7.1.1",
+    "eslint-formatter-sukka": "^7.1.1",
     "typescript": "^5.9.2"
   },
-  "packageManager": "pnpm@10.15.0",
+  "packageManager": "pnpm@10.17.0",
   "pnpm": {
     "onlyBuiltDependencies": [
-      "@swc/core"
-    ]
+      "@swc/core",
+      "oxc-resolver"
+    ],
+    "overrides": {
+      "eslint>chalk": "npm:picocolors@^1.1.1"
+    }
   }
 }

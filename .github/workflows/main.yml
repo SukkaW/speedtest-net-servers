@@ -21,16 +21,15 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      # - name: Tune GitHub-hosted runner network
-      #   # https://github.com/actions/runner-images/issues/1187
-      #   uses: smorimoto/tune-github-hosted-runner-network@v1
-      - uses: actions/checkout@v4
+      - uses: smorimoto/tune-github-hosted-runner-network@v1
+        # https://github.com/actions/runner-images/issues/1187
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
       - uses: pnpm/action-setup@v4
         with:
           run_install: false
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: ".node-version"
           cache: "pnpm"
@@ -52,8 +51,7 @@ jobs:
       - run: |
           mkdir -p /tmp/public/
           echo "Last updated at $(date -u)" > /tmp/public/last-run.txt
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
+      - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: /tmp/public
