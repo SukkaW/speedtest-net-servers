@@ -60,7 +60,7 @@ const publicFolder = path.join(__dirname, 'public');
 (async () => {
   fs.mkdirSync(publicFolder, { recursive: true });
 
-  const topUserAgents = (await (await $$fetch('https://cdn.jsdelivr.net/npm/top-user-agents@2.1.39/src/desktop.json')).json()) as string[];
+  const topUserAgents = (await (await $$fetch('https://cdn.jsdelivr.net/npm/top-user-agents/src/desktop.json')).json()) as string[];
 
   const promises: Array<Promise<SpeedTestServer[]>> = KEYWORDS.map(querySpeedtestApi);
 
@@ -111,12 +111,12 @@ const publicFolder = path.join(__dirname, 'public');
             Accept: 'application/json, text/plain, */*',
             'User-Agent': randomUserAgent,
             'Accept-Language': 'en-US,en;q=0.9',
+            'Sec-Fetch-Dest': 'empty',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Site': 'same-origin',
             ...(randomUserAgent.includes('Chrome')
               ? {
                 'Sec-Ch-Ua-Mobile': '?0',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'same-origin',
                 'Sec-Gpc': '1'
               }
               : {})
@@ -133,6 +133,32 @@ const publicFolder = path.join(__dirname, 'public');
       console.error(e);
       return [];
     }
+  }
+
+  try {
+    const librespeed = await (await $$fetch('https://librespeed.org/backend-servers/servers.php', {
+      headers: {
+        dnt: '1',
+        Referer: 'https://librespeed.org/',
+        Accept: 'application/json, text/plain, */*',
+        'User-Agent': topUserAgents[Math.floor(Math.random() * topUserAgents.length)],
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-origin',
+        ...(topUserAgents[Math.floor(Math.random() * topUserAgents.length)].includes('Chrome')
+          ? {
+            'Sec-Ch-Ua-Mobile': '?0',
+            'Sec-Gpc': '1'
+          }
+          : {})
+      },
+      signal: AbortSignal.timeout(1000 * 60)
+    })).text();
+
+    fs.writeFileSync(path.join(publicFolder, 'librespeed-servers.json'), librespeed, 'utf-8');
+  } catch (e) {
+    console.error(e);
   }
 })();
 
