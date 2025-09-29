@@ -3,6 +3,7 @@ import { newQueue } from '@henrygd/queue';
 import { $$fetch } from './_fetch-retry';
 import path from 'node:path';
 import { asyncWriteToStream } from 'foxts/async-write-to-stream';
+import { pickOne } from 'foxts/pick-random';
 
 interface SpeedTestServer {
   url: string,
@@ -101,7 +102,7 @@ const publicFolder = path.join(__dirname, 'public');
     const url = `https://www.speedtest.net/api/js/servers?engine=js&search=${keyword}&limit=100`;
 
     try {
-      const randomUserAgent = topUserAgents[Math.floor(Math.random() * topUserAgents.length)];
+      const randomUserAgent = pickOne(topUserAgents);
 
       return await s.add<SpeedTestServer[]>(
         () => $$fetch(url, {
@@ -136,17 +137,18 @@ const publicFolder = path.join(__dirname, 'public');
   }
 
   try {
+    const randomUserAgent = pickOne(topUserAgents);
     const librespeed = await (await $$fetch('https://librespeed.org/backend-servers/servers.php', {
       headers: {
         dnt: '1',
         Referer: 'https://librespeed.org/',
         Accept: 'application/json, text/plain, */*',
-        'User-Agent': topUserAgents[Math.floor(Math.random() * topUserAgents.length)],
+        'User-Agent': randomUserAgent,
         'Accept-Language': 'en-US,en;q=0.9',
         'Sec-Fetch-Dest': 'empty',
         'Sec-Fetch-Mode': 'cors',
         'Sec-Fetch-Site': 'same-origin',
-        ...(topUserAgents[Math.floor(Math.random() * topUserAgents.length)].includes('Chrome')
+        ...(randomUserAgent.includes('Chrome')
           ? {
             'Sec-Ch-Ua-Mobile': '?0',
             'Sec-Gpc': '1'
