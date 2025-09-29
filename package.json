@@ -12,21 +12,21 @@
   "license": "MIT",
   "dependencies": {
     "@henrygd/queue": "^1.0.7",
-    "foxts": "^3.13.0",
+    "foxts": "^3.14.1",
     "picocolors": "^1.1.1",
     "undici": "^7.16.0"
   },
   "devDependencies": {
-    "@eslint-sukka/node": "^7.1.1",
+    "@eslint-sukka/node": "^7.2.1",
     "@swc-node/register": "^1.11.1",
     "@swc/core": "^1.13.5",
     "@types/node": "^24.5.2",
     "eslint": "^9.35.0",
-    "eslint-config-sukka": "^7.1.1",
-    "eslint-formatter-sukka": "^7.1.1",
+    "eslint-config-sukka": "^7.2.1",
+    "eslint-formatter-sukka": "^7.2.1",
     "typescript": "^5.9.2"
   },
-  "packageManager": "pnpm@10.17.0",
+  "packageManager": "pnpm@10.17.1",
   "pnpm": {
     "onlyBuiltDependencies": [
       "@swc/core",
