@@ -161,6 +161,7 @@ const publicFolder = path.join(__dirname, 'public');
     fs.writeFileSync(path.join(publicFolder, 'librespeed-servers.json'), librespeed, 'utf-8');
   } catch (e) {
     console.error(e);
+    fs.writeFileSync(path.join(publicFolder, 'librespeed-servers.json'), JSON.stringify([]), 'utf-8');
   }
 })();
 
