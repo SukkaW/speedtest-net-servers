@@ -20,7 +20,7 @@ interface SpeedTestServer {
   host: string
 }
 
-const s = newQueue(2);
+const queue = newQueue(2);
 
 const KEYWORDS = [
   'China',
@@ -65,7 +65,7 @@ const publicFolder = path.join(__dirname, 'public');
 
   const promises: Array<Promise<SpeedTestServer[]>> = KEYWORDS.map(querySpeedtestApi);
 
-  const data = dedupeSpeedTestServersByUrl((await Promise.all(promises)).flat());
+  const data = dedupeSpeedTestServersByUrl((await queue.all(promises)).flat());
 
   if (data.length === 0) {
     throw new Error('No servers found');
@@ -104,32 +104,30 @@ const publicFolder = path.join(__dirname, 'public');
     try {
       const randomUserAgent = pickOne(topUserAgents);
 
-      return await s.add<SpeedTestServer[]>(
-        () => $$fetch(url, {
-          headers: {
-            dnt: '1',
-            Referer: 'https://www.speedtest.net/',
-            Accept: 'application/json, text/plain, */*',
-            'User-Agent': randomUserAgent,
-            'Accept-Language': 'en-US,en;q=0.9',
-            'Sec-Fetch-Dest': 'empty',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Site': 'same-origin',
-            ...(randomUserAgent.includes('Chrome')
-              ? {
-                'Sec-Ch-Ua-Mobile': '?0',
-                'Sec-Gpc': '1'
-              }
-              : {})
-          },
-          signal: AbortSignal.timeout(1000 * 60)
-        }).then(res => res.json() as Promise<SpeedTestServer[]>).then(data => {
-          for (let i = 0, len = data.length; i < len; i++) {
-            data[i].distance = 0;
-          }
-          return data;
-        })
-      );
+      return await $$fetch(url, {
+        headers: {
+          dnt: '1',
+          Referer: 'https://www.speedtest.net/',
+          Accept: 'application/json, text/plain, */*',
+          'User-Agent': randomUserAgent,
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Sec-Fetch-Dest': 'empty',
+          'Sec-Fetch-Mode': 'cors',
+          'Sec-Fetch-Site': 'same-origin',
+          ...(randomUserAgent.includes('Chrome')
+            ? {
+              'Sec-Ch-Ua-Mobile': '?0',
+              'Sec-Gpc': '1'
+            }
+            : {})
+        },
+        signal: AbortSignal.timeout(1000 * 60)
+      }).then(res => res.json() as Promise<SpeedTestServer[]>).then(data => {
+        for (let i = 0, len = data.length; i < len; i++) {
+          data[i].distance = 0;
+        }
+        return data;
+      });
     } catch (e) {
       console.error(e);
       return [];
