@@ -27,8 +27,17 @@ const KEYWORDS = [
   'China Telecom',
   'China Mobile',
   'China Unicom',
+  'CERNET',
+  'Beijing',
+  'Shanghai',
+  'Guangzhou',
+  'Shenzhen',
+  'Suzhou',
+  'Hangzhou',
+  'Chengdu',
   'Hong Kong',
   'Taiwan',
+  'Taichung',
   'Japan',
   'Tokyo',
   'Osaka',
@@ -37,19 +46,28 @@ const KEYWORDS = [
   'Seoul',
   'Canada',
   'Toronto',
+  'Vancouver',
   'Montreal',
   'Los Ang',
-  'San Jos',
+  'San Jose',
   'Seattle',
   'New York',
   'Dallas',
   'Miami',
+  'Chicago',
   'Berlin',
   'Frankfurt',
   'London',
+  'Manchester',
   'Paris',
+  'Austria',
   'Amsterdam',
   'Moscow',
+  'Petersburg',
+  'Warsaw',
+  'Spain',
+  'India',
+  'Delhi',
   'Australia',
   'Sydney',
   'Brazil',
@@ -63,9 +81,7 @@ const publicFolder = path.join(__dirname, 'public');
 
   const topUserAgents = (await (await $$fetch('https://cdn.jsdelivr.net/npm/top-user-agents/src/desktop.json')).json()) as string[];
 
-  const promises: Array<Promise<SpeedTestServer[]>> = KEYWORDS.map(querySpeedtestApi);
-
-  const data = dedupeSpeedTestServersByUrl((await queue.all(promises)).flat());
+  const data = dedupeSpeedTestServersByUrl((await queue.all(KEYWORDS.map(keyword => () => querySpeedtestApi(keyword)))).flat());
 
   if (data.length === 0) {
     throw new Error('No servers found');
@@ -81,21 +97,21 @@ const publicFolder = path.join(__dirname, 'public');
     || a.https_functional - b.https_functional
   ));
 
-  const writeStream = fs.createWriteStream(path.join(publicFolder, 'servers.json'));
-  let p = asyncWriteToStream(writeStream, '[\n');
+  const writeSpeedtestServersJsonStream = fs.createWriteStream(path.join(publicFolder, 'servers.json'));
+  let p = asyncWriteToStream(writeSpeedtestServersJsonStream, '[\n');
   if (p) await p;
   for (let i = 0, len = data.length; i < len; i++) {
     const item = data[i];
-    p = asyncWriteToStream(writeStream, JSON.stringify(item));
+    p = asyncWriteToStream(writeSpeedtestServersJsonStream, JSON.stringify(item));
     // eslint-disable-next-line no-await-in-loop -- stream backpressure
     if (p) await p;
     if (i < len - 1) {
-      p = asyncWriteToStream(writeStream, ',\n');
+      p = asyncWriteToStream(writeSpeedtestServersJsonStream, ',\n');
       // eslint-disable-next-line no-await-in-loop -- stream backpressure
       if (p) await p;
     }
   }
-  p = asyncWriteToStream(writeStream, ']\n');
+  p = asyncWriteToStream(writeSpeedtestServersJsonStream, ']\n');
   if (p) await p;
 
   async function querySpeedtestApi(keyword: string) {
