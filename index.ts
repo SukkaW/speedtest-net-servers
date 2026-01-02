@@ -20,9 +20,10 @@ interface SpeedTestServer {
   host: string
 }
 
-const queue = newQueue(2, 3, 1000); // concurrency 2, max 3 requests per second
+const queue = newQueue(2, 5, 1000); // concurrency 2, max 5 requests per second
 
 const KEYWORDS = [
+  // CN
   'China',
   'China Telecom',
   'China Mobile',
@@ -35,19 +36,26 @@ const KEYWORDS = [
   'Suzhou',
   'Hangzhou',
   'Chengdu',
+  // HK
   'Hong Kong',
+  // TW
   'Taiwan',
   'Taichung',
+  // JP
   'Japan',
   'Tokyo',
   'Osaka',
+  // SG
   'Singapore',
+  // KR
   'Korea',
   'Seoul',
+  // CA
   'Canada',
   'Toronto',
   'Vancouver',
   'Montreal',
+  // US
   'Los Ang',
   'San Jose',
   'Seattle',
@@ -55,23 +63,49 @@ const KEYWORDS = [
   'Dallas',
   'Miami',
   'Chicago',
+  'Atlanta',
+  // DE
+  'Germany',
+  'Hamburg',
   'Berlin',
   'Frankfurt',
+  // UK
   'London',
   'Manchester',
+  'Birmingham',
+  // FR
   'Paris',
-  'Austria',
+  'France',
+  // NL
+  'Netherlands',
   'Amsterdam',
+  // AT
+  'Austria',
+  'Vienna',
+  // IT
+  'Italy',
+  'Rome',
+  'Milan',
+  // ES
+  'Spain',
+  // PL
+  'Warsaw',
+  // RU
   'Moscow',
   'Petersburg',
-  'Warsaw',
-  'Spain',
+  // IN
   'India',
   'Delhi',
+  'Mumbai',
+  // AU
   'Australia',
   'Sydney',
   'Brazil',
-  'Turkey'
+  'Turkey',
+  // ISP
+  'GSL',
+  'AT&T',
+  'Misaka'
 ];
 
 const publicFolder = path.join(__dirname, 'public');
