@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { newQueue } from '@henrygd/queue';
+import { newQueue } from '@henrygd/queue/rl';
 import { $$fetch } from './_fetch-retry';
 import path from 'node:path';
 import { asyncWriteToStream } from 'foxts/async-write-to-stream';
@@ -20,7 +20,7 @@ interface SpeedTestServer {
   host: string
 }
 
-const queue = newQueue(2);
+const queue = newQueue(2, 3, 1000); // concurrency 2, max 3 requests per second
 
 const KEYWORDS = [
   'China',
