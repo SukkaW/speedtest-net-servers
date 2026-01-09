@@ -1,2 +1,2 @@
-/servers.json
-  Cloudflare-CDN-Cache-Control: public, max-age=600
+/*.json
+  Cache-Control: public, max-age=600
