@@ -164,12 +164,10 @@ const publicFolder = path.join(__dirname, 'public');
           'Sec-Fetch-Dest': 'empty',
           'Sec-Fetch-Mode': 'cors',
           'Sec-Fetch-Site': 'same-origin',
-          ...(randomUserAgent.includes('Chrome')
-            ? {
-              'Sec-Ch-Ua-Mobile': '?0',
-              'Sec-Gpc': '1'
-            }
-            : {})
+          ...(randomUserAgent.includes('Chrome') && {
+            'Sec-Ch-Ua-Mobile': '?0',
+            'Sec-Gpc': '1'
+          })
         },
         signal: AbortSignal.timeout(1000 * 60)
       }).then(res => res.json() as Promise<SpeedTestServer[]>).then(data => {
@@ -196,12 +194,10 @@ const publicFolder = path.join(__dirname, 'public');
         'Sec-Fetch-Dest': 'empty',
         'Sec-Fetch-Mode': 'cors',
         'Sec-Fetch-Site': 'same-origin',
-        ...(randomUserAgent.includes('Chrome')
-          ? {
-            'Sec-Ch-Ua-Mobile': '?0',
-            'Sec-Gpc': '1'
-          }
-          : {})
+        ...(randomUserAgent.includes('Chrome') && {
+          'Sec-Ch-Ua-Mobile': '?0',
+          'Sec-Gpc': '1'
+        })
       },
       signal: AbortSignal.timeout(1000 * 60)
     })).text();
