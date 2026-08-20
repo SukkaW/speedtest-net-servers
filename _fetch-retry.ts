@@ -97,7 +97,7 @@ setGlobalDispatcher(agent.compose(
 
       console.log('[fetch retry]', 'schedule retry', { statusCode, retryTimeout, errorCode, url: opts.origin });
       // eslint-disable-next-line sukka/prefer-timer-id -- won't leak
-      setTimeout(() => cb(null), retryTimeout);
+      setTimeout(cb, retryTimeout, null);
     }
     // errorCodes: ['UND_ERR_HEADERS_TIMEOUT', 'ECONNRESET', 'ECONNREFUSED', 'ENOTFOUND', 'ENETDOWN', 'ENETUNREACH', 'EHOSTDOWN', 'EHOSTUNREACH', 'EPIPE', 'ETIMEDOUT']
   }),

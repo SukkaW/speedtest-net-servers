@@ -21,6 +21,7 @@ interface SpeedTestServer {
 }
 
 const queue = newQueue(2, 5, 1000); // concurrency 2, max 5 requests per second
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'base' });
 
 const KEYWORDS = [
   // CN
@@ -122,12 +123,12 @@ const publicFolder = path.join(__dirname, 'public');
   }
 
   data.sort((a, b) => (
-    a.country.localeCompare(b.country)
-    || a.name.localeCompare(b.name)
-    || a.host.localeCompare(b.host)
-    || a.sponsor.localeCompare(b.sponsor)
-    || a.url.localeCompare(b.url)
-    || a.id.localeCompare(b.id)
+    collator.compare(a.country, b.country)
+    || collator.compare(a.name, b.name)
+    || collator.compare(a.host, b.host)
+    || collator.compare(a.sponsor, b.sponsor)
+    || collator.compare(a.url, b.url)
+    || collator.compare(a.id, b.id)
     || a.https_functional - b.https_functional
   ));
 
