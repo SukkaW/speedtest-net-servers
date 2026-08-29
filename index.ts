@@ -20,7 +20,7 @@ interface SpeedTestServer {
   host: string
 }
 
-const queue = newQueue(2, 5, 1000); // concurrency 2, max 5 requests per second
+const queue = newQueue(2, 4, 1000); // concurrency 2, max 5 requests per second
 const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'base' });
 
 const KEYWORDS = [
